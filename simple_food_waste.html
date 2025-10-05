@@ -1,0 +1,83 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Waste Reduction Platform</title>
+<style>
+    body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+    h1 { text-align: center; color: #2c3e50; }
+    form { background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; max-width: 500px; margin: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
+    input, button { width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    th, td { padding: 12px; text-align: center; border-bottom: 1px solid #ddd; }
+    th { background: #27ae60; color: white; }
+    button.claim { background: #e67e22; color: white; border: none; cursor: pointer; border-radius: 5px; }
+    button.claim:disabled { background: #95a5a6; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<h1>Food Waste Reduction Platform</h1>
+
+<form id="foodForm">
+    <h2>Add Food Donation</h2>
+    <input type="text" id="foodName" placeholder="Food Name" required>
+    <input type="text" id="quantity" placeholder="Quantity (e.g., 10 packets)" required>
+    <input type="text" id="donorName" placeholder="Donor Name" required>
+    <input type="text" id="pickupTime" placeholder="Pickup Time (e.g., 2 PM)" required>
+    <input type="text" id="location" placeholder="Location (e.g., city or address)" required>
+    <button type="submit">Add Donation</button>
+</form>
+
+<table id="foodTable">
+    <thead>
+        <tr>
+            <th>Food Name</th>
+            <th>Quantity</th>
+            <th>Donor</th>
+            <th>Pickup Time</th>
+            <th>Location</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+const form = document.getElementById('foodForm');
+const tableBody = document.querySelector('#foodTable tbody');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const foodName = document.getElementById('foodName').value;
+    const quantity = document.getElementById('quantity').value;
+    const donorName = document.getElementById('donorName').value;
+    const pickupTime = document.getElementById('pickupTime').value;
+    const location = document.getElementById('location').value;
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${foodName}</td>
+        <td>${quantity}</td>
+        <td>${donorName}</td>
+        <td>${pickupTime}</td>
+        <td>${location}</td>
+        <td><button class="claim">Claim</button></td>
+    `;
+
+    const claimButton = row.querySelector('.claim');
+    claimButton.addEventListener('click', function() {
+        claimButton.textContent = 'Claimed';
+        claimButton.disabled = true;
+        row.style.backgroundColor = '#dff0d8';
+    });
+
+    tableBody.appendChild(row);
+    form.reset();
+});
+</script>
+
+</body>
+</html>
